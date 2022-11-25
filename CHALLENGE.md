@@ -91,10 +91,7 @@ opening new contexts. Opening multiple connections is not currently supported.
 
 ### Note on debugging
 
-This is the first time the QNE-ADK is being used for a public hackathon and as
-such many features still need some time to mature. In particular, debugging
-applications can be challenging at times. Here are some tips to help you with
-debugging:
+Here are some tips to help you with debugging:
 - Make sure you run experiments with your applications very often to ensure your
   code is runnable at all times and to make it easy to identify problematic
   code. The provided template will run without any errors so it provides a good
@@ -275,7 +272,3 @@ in which this can be done:
 Can you think of a better way with some better trade-off? If so, please include
 an `authentication.md` file with your submission outlining your solution. You
 can, of course, always implement a demonstration with your QKD protocol as well.
-Submissions for this part of the challenge are not judged as part of the
-hackathon. However, if your solution is particularly novel and interesting
-QuTech may reach out to you for a more extensive discussion around your
-proposal.

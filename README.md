@@ -1,7 +1,4 @@
-# QuTech Quantum Network Explorer QKD Challenge
-
-Welcome to QuTech's [Quantum Network Explorer](https://www.quantum-network.com/)
-QKD challenge!
+# Quantum Internet Hackathon 2022: QKD Challenge
 
 In this challenge you will have the possibility to implement your own QKD
 protocol and test it against an eavesdropper. Will you be able to detect an
@@ -13,7 +10,7 @@ the tasks involved in this challenge, please see [CHALLENGE.md](CHALLENGE.md).
 ## Introduction to Quantum Networks with the Quantum Network Explorer
 
 If you are entirely new to quantum communication, please head over to the
-Quantum Network Explorer learning section and explore some [pre-built
+Quantum Network Explorer (QNE) learning section and explore some [pre-built
 applications](https://www.quantum-network.com/applications/) or read up on the
 basics on the [knowledge base](https://www.quantum-network.com/knowledge-base/).
 
