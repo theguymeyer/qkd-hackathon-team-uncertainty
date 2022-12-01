@@ -3,7 +3,7 @@ from typing import Optional, Callable, List, Tuple, Union, ContextManager
 
 from netqasm.qlink_compat import TimeUnit, RandomBasis, EPRType, LinkLayerOKTypeM, LinkLayerOKTypeR
 from netqasm.sdk.builder import EprKeepResult, EprMeasureResult
-from netqasm.sdk.epr_socket import EPRSocket, EPRMeasBasis
+from netqasm.sdk.epr_socket import EPRSocket, EprMeasBasis
 from netqasm.sdk.futures import RegFuture
 from netqasm.sdk.qubit import Qubit, FutureQubit
 
@@ -78,8 +78,8 @@ class DerivedEPRSocket(EPRSocket):
         number: int = 1,
         time_unit: TimeUnit = TimeUnit.MICRO_SECONDS,
         max_time: int = 0,
-        basis_local: EPRMeasBasis = None,
-        basis_remote: EPRMeasBasis = None,
+        basis_local: EprMeasBasis = None,
+        basis_remote: EprMeasBasis = None,
         rotations_local: Tuple[int, int, int] = (0, 0, 0),
         rotations_remote: Tuple[int, int, int] = (0, 0, 0),
         random_basis_local: Optional[RandomBasis] = None,
@@ -92,7 +92,7 @@ class DerivedEPRSocket(EPRSocket):
         number: int = 1,
         time_unit: TimeUnit = TimeUnit.MICRO_SECONDS,
         max_time: int = 0,
-        basis_local: EPRMeasBasis = None,
+        basis_local: EprMeasBasis = None,
         rotations_local: Tuple[int, int, int] = (0, 0, 0),
         random_basis_local: Optional[RandomBasis] = None,
         min_fidelity_all_at_end: Optional[int] = None,
@@ -107,8 +107,8 @@ class DerivedEPRSocket(EPRSocket):
         tp: EPRType = EPRType.K,
         time_unit: TimeUnit = TimeUnit.MICRO_SECONDS,
         max_time: int = 0,
-        basis_local: EPRMeasBasis = None,
-        basis_remote: EPRMeasBasis = None,
+        basis_local: EprMeasBasis = None,
+        basis_remote: EprMeasBasis = None,
         rotations_local: Tuple[int, int, int] = (0, 0, 0),
         rotations_remote: Tuple[int, int, int] = (0, 0, 0),
         random_basis_local: Optional[RandomBasis] = None,
