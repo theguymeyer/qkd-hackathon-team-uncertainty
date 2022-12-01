@@ -10,6 +10,7 @@
       "type": "local_netsquid"
     },
     "number_of_rounds": 1,
+    "name": "teleport_experiment",
     "description": "teleport_experiment: experiment description"
   },
   "asset": {
