@@ -1,5 +1,10 @@
 {
   "meta": {
+    "application": {
+      "slug": "teleport",
+      "app_version": "",
+      "multi_round": false
+    },
     "backend": {
       "location": "local",
       "type": "local_netsquid"
