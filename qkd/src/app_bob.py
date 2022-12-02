@@ -24,7 +24,7 @@ def basis_check(bob_measured_bits, alice_basis, bob_basis):
 
 
 def main(app_config=None, key_length=16):
-    log("my name is bob")
+    log("my name is bob", "bob", app_config)
 
     # Socket for classical communication
     socket = Socket("bob", "alice", log_config=app_config.log_config)
