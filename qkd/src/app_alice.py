@@ -1,32 +1,15 @@
-from netqasm.logging.glob import get_netqasm_logger
+from netqasm.logging.output import get_new_app_logger
 from netqasm.sdk.external import NetQASMConnection, Socket
 
 from epr_socket import DerivedEPRSocket as EPRSocket
-from common import log
 
-import random
-
-BASIS = ['Z', 'X']  # |0>|1> = Z-Basis; |+>|-> = X-Basis
-
-logger = get_netqasm_logger()
-
-def random_basis(key_size):
-    alice_basis = ""
-    for kl in range(key_size):
-        alice_basis += random.choice(BASIS)
-    return alice_basis
-
-def basis_check(alice_measured_bits, alice_basis, bob_basis):
-    sifted_key = []
-    for i in range(len(alice_measured_bits)):
-        if alice_basis[i] == bob_basis[i]:
-            sifted_key.append(alice_measured_bits)
-    return sifted_key
+from util import random_basis, basis_check
 
 def main(app_config=None, key_length=16):
 
-    log("test 1", "alice", app_config)
-    # log("test 2", app_config)
+    app_logger = get_new_app_logger(app_name=app_config.app_name,
+                                    log_config=app_config.log_config)
+    app_logger.log("Alice is alive")
 
     # Socket for classical communication
     socket = Socket("alice", "bob", log_config=app_config.log_config)
@@ -42,30 +25,36 @@ def main(app_config=None, key_length=16):
     alice_basis = random_basis(key_length)
     
     with alice:
+        app_logger.log("Alice starts the protocol")
         secret_key = []
 
         alice_measured_bits = []
         for basis in alice_basis:
             # Create an entangled pair using the EPR socket to bob
             q_ent = epr_socket.create()[0]
-            logger.info("Entanglement pair creation at alice")
+            app_logger.log("Entanglement pair creation at alice")
 
-            if basis == 'Z':
-                alice_measured_bits.append(q_ent.measure())
-                logger.info("Alice measures with Z base")
-
-            elif basis == 'X':
+            if basis == 'X':
                 q_ent.H()
-                alice_measured_bits.append(q_ent.measure())
-                logger.info("Alice measures with Z base")
-        
+                
+            m = q_ent.measure()
+
+            alice.flush()
+
+            alice_measured_bits.append(m)
+            app_logger.log(f"Alice is measuring with X base: {m}")
+
+
         # Send classical information using socket to bob
         socket.send(alice_basis)
+        app_logger.log("Alice send her basis to Bob")
 
-        # # Receive bob basis using socket from bob
+        # Receive bob basis using socket from bob
+        app_logger.log("Alice is waiting bob's basis")
         bob_basis = socket.recv()
 
         sk = basis_check(alice_measured_bits, alice_basis, bob_basis)
+        app_logger.log(f"Alice compute the sifted key: {sk}")
 
     # RETURN THE SECRET KEY HERE
     return {

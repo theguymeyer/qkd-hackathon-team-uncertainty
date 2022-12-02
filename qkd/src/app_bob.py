@@ -1,30 +1,14 @@
-from netqasm.logging.glob import get_netqasm_logger
+from netqasm.logging.output import get_new_app_logger
 from netqasm.sdk.external import NetQASMConnection, Socket
 
 from epr_socket import DerivedEPRSocket as EPRSocket
-from common import log
-import random
 
-BASIS = ['Z', 'X']  # |0>|1> = Z-Basis; |+>|-> = X-Basis
-
-logger = get_netqasm_logger()
-
-def random_basis(key_size):
-    bob_basis = ""
-    for kl in range(key_size):
-        bob_basis += random.choice(BASIS)
-    return bob_basis
-
-def basis_check(bob_measured_bits, alice_basis, bob_basis):
-    sifted_key = []
-    for i in range(len(bob_measured_bits)):
-        if alice_basis[i] == bob_basis[i]:
-            sifted_key.append(bob_measured_bits)
-    return sifted_key
-
+from util import random_basis, basis_check
 
 def main(app_config=None, key_length=16):
-    log("my name is bob", "bob", app_config)
+    app_logger = get_new_app_logger(app_name=app_config.app_name,
+                                    log_config=app_config.log_config)
+    app_logger.log("Bob is alive")
 
     # Socket for classical communication
     socket = Socket("bob", "alice", log_config=app_config.log_config)
@@ -42,20 +26,21 @@ def main(app_config=None, key_length=16):
         secret_key = []
         
         bob_measured_bits = []
-        for basis in bob_basis:
+        for base in bob_basis:
             # Create an entangled pair using the EPR socket to bob
             q_ent = epr_socket.recv()[0]
-            logger.info("Entanglement pair creation at bob")
+            app_logger.log("Entanglement pair creation at bob")
 
-            if basis == 'Z':
-                bob_measured_bits.append(q_ent.measure())
-                logger.info("bob measures with Z base")
-
-            if basis == 'X':
+            if base == 'X':
                 q_ent.H()
-                bob_measured_bits.append(q_ent.measure())
-                logger.info("bob measures with Z base")
-        
+
+            m = q_ent.measure()
+
+            bob.flush()
+
+            bob_measured_bits.append(m)
+            app_logger.log(f"Bob is measuring with {base} base: {m}")
+
         # Receive alice basis
         alice_basis = socket.recv()
 

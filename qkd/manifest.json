@@ -2,9 +2,7 @@
   "application": {
     "name": "qkd",
     "description": "add description",
-    "multi_round": false,
-    "author": "Constant Uncertainty Team",
-    "email": "guymeyer1995@gmail.com"
+    "multi_round": false
   },
   "remote": {}
 }
