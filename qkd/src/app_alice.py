@@ -2,8 +2,7 @@ from netqasm.logging.glob import get_netqasm_logger
 from netqasm.sdk.external import NetQASMConnection, Socket
 
 from epr_socket import DerivedEPRSocket as EPRSocket
-from netqasm.logging.output import get_new_app_logger
-from common import printing
+from common import log
 
 import random
 
@@ -25,11 +24,9 @@ def basis_check(alice_measured_bits, alice_basis, bob_basis):
     return sifted_key
 
 def main(app_config=None, key_length=16):
-    # Put your code here
-    log_config = app_config.log_config
-    app_logger = get_new_app_logger(app_name="sender", log_config=log_config)
-    app_logger.log("testing logging command")
-    printing(app_logger)
+
+    log("test 1", app_config)
+    log("test 2", app_config)
 
     # Socket for classical communication
     socket = Socket("alice", "bob", log_config=app_config.log_config)
